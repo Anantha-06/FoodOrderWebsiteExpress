@@ -1,17 +1,20 @@
 import express from "express";
 import { connectDb } from "./config/db.js";
+import cookieParser from "cookie-parser";
+import { apiRouter } from "./routes/routes.js";
 
+const app = express();
+const port = process.env.PORT;
+app.use(express.json());
+app.use(cookieParser());
 
-const app = express()
-const port = process.env.PORT
-app.use(express.json())
-app.get('/',(req,res)=>{
-    res.send("HI")
-})
-const db = connectDb
-db()
-app.listen(port, () => console.log(`Server running on port: http://localhost:${port}`));
+app.use("/api",apiRouter)
+const db = connectDb;
+db();
+app.listen(port, () =>
+  console.log(`Server running on port: http://localhost:${port}`)
+);
 
 app.all("*", (req, res) => {
-    res.status(404).json({ message: "end point does not exist" });
-  });
+  res.status(404).json({ message: "end point does not exist" });
+});
