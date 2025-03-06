@@ -1,22 +1,34 @@
-import jwt, { verify } from "jsonwebtoken";
-const auth =async(req,res,next)=>{
-try {
-    const token = req.cookies.token
-    if(!token){
-        return res.status(401).json({message:"unauthorized : No Token Provided"})
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+
+dotenv.config();
+
+export const authMiddleware = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized: No Token Provided" });
     }
-    const tokenDecoded = jwt.verify(token,process.env.JWT_SECRET)
-    if(!token){
-        return res.status(401).json({message:"User Not Authorized"})  
+
+    const tokenDecoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = tokenDecoded
+    next(); 
+  } catch (error) {
+    console.error("Error verifying token:", error.message);
+    res.status(401).json({ message: "Invalid or Expired Token" });
+  }
+};
+
+//role Middileware//
+
+export const roleMiddleware = (...roles)=>{
+    return (req,res,next
+    )=>{
+        if(!req.user||!roles.includes(req.user.role)){
+            res.status(403).json({message: "Access Denied"})
+        }
+        next()
+        
     }
- req.user = tokenDecoded
- next()
-} catch (error) {
-    console.log("error verify token",error)
-    res.status(500).json({message:"internal Server error"})
 }
-}
-
-
-
-

@@ -16,4 +16,4 @@ router.get("/profile", authMiddleware, getProfile);
 router.put("/update", authMiddleware, profileUpdate);
 router.get("/profile/role",authMiddleware,getRole)
 
-export const authRouter = router;
+export const adminRouter = router;
