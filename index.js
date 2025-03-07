@@ -1,7 +1,7 @@
 import express from "express";
 import { connectDb } from "./config/db.js";
 import cookieParser from "cookie-parser";
-import { apiRouter } from "./routes/routes.js";
+import { apiRouter } from "./routes/V1/routes.js";
 
 const app = express();
 const port = process.env.PORT;
