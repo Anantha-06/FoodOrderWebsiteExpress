@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
-const addressSchema = new Schema({
+const addressSchema = new Schema( {
   name: { type: String, required: true, maxlength: 50 },
   HouseName:{ type: String, required: true, maxlength: 50 },
   streetName: { type: String, required: true, maxlength: 50 },
@@ -22,3 +22,4 @@ const addressSchema = new Schema({
 });
 
 export const Address = mongoose.model("Address", addressSchema);
+
