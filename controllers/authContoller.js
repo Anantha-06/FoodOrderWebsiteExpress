@@ -100,7 +100,7 @@ export async function getRole(req, res) {
     }
     const user = await User.findById(userId).select("role");
     if (!user) {
-      return res.status(401).json({ message: "Unable To Find User" });
+      return res.status(404).json({ message: "Unable To Find User" });
     }
     res.status(200).json({ message: "Role Fetched Sucessfully", user });
   } catch (error) {
